@@ -46,7 +46,6 @@
          function Populate(model){
              $.getJSON("API/"+model+"?Resource", function (dataModelResource) {
                  
-
                  jQuery.globalEval(createResource(dataModelResource));
 
                  $.getJSON("API/" + model, function (dataModel) {
