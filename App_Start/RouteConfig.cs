@@ -8,10 +8,9 @@ namespace WebUI {
   public class RouteConfig {
     public static void RegisterRoutes(RouteCollection routes) {
 
-      // Register a route for Categories/All
-      routes.MapPageRoute(
-         "All API Calls",      // Route name
-         "API/",      // Route URL
+  
+      routes.MapPageRoute("AllAPICalls",     // Route name
+         "API/{name}",      // Route URL
          "~/API.aspx" // Web page to handle route
       );
 

@@ -5,12 +5,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     Todo
-<p data-bind="css: { error: todo.hasError }">
-    <input data-bind='value: todo, valueUpdate: "afterkeydown"' />
-    <span data-bind='visible: todo.hasError, text: todo.validationMessage'> </span>
+<p data-bind="css: { error: Title.hasError }">
+    <input data-bind='value: Title, valueUpdate: "afterkeydown"' />
+    <span data-bind='visible: Title.hasError, text: Title.validationMessage'> </span>
 </p>
 
-    <p><input data-bind='value: numUsers' /></p>
+    <p><input data-bind='value: DueDate' /></p>
 
     <script type="text/javascript">
         ko.extenders.required = function (target, overrideMessage) {
@@ -40,15 +40,51 @@
         
          //Note this must link to resouce from api to pull definition to populate model, and then to pull down info from api 
          //and dynamically construct the following
-        var data = {
+        
+         
+
+         function Populate(model){
+             $.getJSON("API/"+model+"?Resource", function (dataModelResource) {
+                 
+
+                 jQuery.globalEval(createResource(dataModelResource));
+
+                 $.getJSON("API/" + model, function (dataModel) {
+                     for (i in dataModel) {
+                         for (name in data) {
+                             eval("data." + name + "(dataModel[i][name])")
+                         }
+                     }
+                     //map this directly to view model
+                     var viewModel = ko.mapping.fromJS(data);
+                     //apply  it mofo
+                     ko.applyBindings(viewModel);
+                 })
+
+
+             })
+         }
+
+         function createResource(dataModelResource) {
+             var strData = "";
+             for (i in dataModelResource) {
+                 if (i > 0) { strData += "," }
+                 strData += dataModelResource[i]["Name"] + ": ko.observable('').extend({ required: 'Please enter a todo' }) "
+             }
+             strData = "var data = { " + strData + "}";
+             return strData;
+         }
+
+         
+
+         Populate("ToDoLists")
+
+       /* var data = {
             todo: ko.observable('').extend({ required: "Please enter a todo" }),
             numUsers: 3
-        }
+        }*/
         
-        //map this directly to view model
-        var viewModel = ko.mapping.fromJS(data);
-        //apply  it mofo
-        ko.applyBindings(viewModel);
+       
 
     </script>
 </asp:Content>
