@@ -14,6 +14,52 @@
    
     </div>
      <script type="text/javascript">
+        
+         //Note this must link to resouce from api to pull definition to populate model, and then to pull down info from api 
+         //and dynamically construct the following
+
+         function Sprinkle(modelName) {
+             $.getJSON("API/"+modelName+"?Resource", function (dataModelResource) {
+                 
+                 jQuery.globalEval(CreateResource(dataModelResource, modelName));
+
+                 $.getJSON("API/" + modelName, function (data) {
+                     $.each(data, function (i, item) {
+                         for (name in dataModel) {
+                             eval("dataModel." + name + "(item[name])")
+                         }
+                     })
+                    
+                 }).success(function () {
+                     var viewModel = ko.mapping.fromJS(dataModel);
+                     ko.applyBindings(viewModel);
+                 })
+                  .error(function () { alert("error"); })
+             })
+             
+
+             function CreateResource(dataModelResource) {
+                 var strData = "";
+                 $.each(dataModelResource, function (i, item) {
+                     if (i > 0) { strData += "," }
+                     strData += item["Property"] + ": ko.observable('')";
+                     if (item["Validations"] != null) {
+                         $.each(item["Validations"], function (j, validationItem) {
+                             strData += ".extend({ required: '" + validationItem["Message"] + "' })";
+                         })
+                         strData += " "
+                     }
+                 })
+
+                 strData = "var dataModel = { " + strData + "}";
+                 return strData;
+             }
+         }
+
+        
          Sprinkle("ToDoLists")
+
+       
+
     </script>
 </asp:Content>
