@@ -20,7 +20,7 @@
          function Sprinkle(model) {
              $.getJSON("API/"+model+"?Resource", function (dataModelResource) {
                  
-                 jQuery.globalEval(createResource(dataModelResource));
+                 jQuery.globalEval(CreateResource(dataModelResource));
 
                  $.getJSON("API/" + model, function (dataModel) {
                      for (i in dataModel) {
@@ -41,7 +41,7 @@
                  var strData = "";
                  for (i in dataModelResource) {
                      if (i > 0) { strData += "," }
-                     strData += dataModelResource[i]["Name"] + ": ko.observable('').extend({ required: 'Please enter a todo' }) "
+                     strData += dataModelResource[i]["Property"] + ": ko.observable('').extend({ required: 'Please enter a todo' }) "
                  }
                  strData = "var data = { " + strData + "}";
                  return strData;
