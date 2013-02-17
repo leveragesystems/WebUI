@@ -18,12 +18,12 @@
          function Sprinkle(modelName) {
              $.getJSON("API/"+modelName+"?Resource", function (dataModelResource) {
                  
-                 jQuery.globalEval(CreateResource(dataModelResource, modelName));
+                 var dataModel = CreateModel(dataModelResource)
 
                  $.getJSON("API/" + modelName, function (data) {
                      $.each(data, function (i, item) {
                          for (name in dataModel) {
-                             eval("dataModel." + name + "(item[name])")
+                             dataModel[name](item[name])
                          }
                      })
                     
@@ -34,22 +34,17 @@
                   .error(function () { alert("error"); })
              }).error(function () { alert("error"); })
              
-
-             function CreateResource(dataModelResource) {
-                 var strData = "";
+             function CreateModel(dataModelResource) {
+                 var dataModel = {}
                  $.each(dataModelResource, function (i, item) {
-                     if (i > 0) { strData += "," }
-                     strData += item["Property"] + ": ko.observable('')";
+                     dataModel[item["Property"]] = ko.observable('');
                      if (item["Validations"] != null) {
                          $.each(item["Validations"], function (j, validationItem) {
-                             strData += ".extend({ required: '" + validationItem["Message"] + "' })";
+                             dataModel[item["Property"]] = dataModel[item["Property"]].extend({ required: validationItem["Message"] })
                          })
-                         strData += " "
                      }
                  })
-
-                 strData = "var dataModel = { " + strData + "}";
-                 return strData;
+                 return dataModel;
              }
          }
 
