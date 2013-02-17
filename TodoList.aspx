@@ -14,9 +14,6 @@
    
     </div>
      <script type="text/javascript">
-        
-         //Note this must link to resouce from api to pull definition to populate model, and then to pull down info from api 
-         //and dynamically construct the following
 
          function Sprinkle(modelName) {
              $.getJSON("API/"+modelName+"?Resource", function (dataModelResource) {
@@ -35,7 +32,7 @@
                      ko.applyBindings(viewModel);
                  })
                   .error(function () { alert("error"); })
-             })
+             }).error(function () { alert("error"); })
              
 
              function CreateResource(dataModelResource) {
@@ -56,10 +53,7 @@
              }
          }
 
-        
          Sprinkle("ToDoLists")
-
-       
 
     </script>
 </asp:Content>
