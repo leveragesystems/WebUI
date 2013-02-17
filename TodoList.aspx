@@ -15,39 +15,6 @@
     </div>
      <script type="text/javascript">
 
-         function Sprinkle(modelName) {
-             $.getJSON("API/"+modelName+"?Resource", function (dataModelResource) {
-                 
-                 var dataModel = CreateModel(dataModelResource)
-
-                 $.getJSON("API/" + modelName, function (data) {
-                     $.each(data, function (i, item) {
-                         for (name in dataModel) {
-                             dataModel[name](item[name])
-                         }
-                     })
-                    
-                 }).success(function () {
-                     var viewModel = ko.mapping.fromJS(dataModel);
-                     ko.applyBindings(viewModel);
-                 })
-                  .error(function () { alert("error"); })
-             }).error(function () { alert("error"); })
-             
-             function CreateModel(dataModelResource) {
-                 var dataModel = {}
-                 $.each(dataModelResource, function (i, item) {
-                     dataModel[item["Property"]] = ko.observable('');
-                     if (item["Validations"] != null) {
-                         $.each(item["Validations"], function (j, validationItem) {
-                             dataModel[item["Property"]] = dataModel[item["Property"]].extend({ required: validationItem["Message"] })
-                         })
-                     }
-                 })
-                 return dataModel;
-             }
-         }
-
          Sprinkle("ToDoLists")
 
     </script>
