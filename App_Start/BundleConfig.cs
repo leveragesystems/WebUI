@@ -11,5 +11,7 @@ namespace WebUI {
       bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
         "~/Scripts/knockout*"));
     }
+
+
   }
 }
