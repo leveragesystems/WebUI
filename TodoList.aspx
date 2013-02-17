@@ -3,15 +3,16 @@
         
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    Todo
-<p data-bind="css: { error: Title.hasError }">
+<div class="container">
+    
+<p data-bind="css: { error: Title.hasError }"> Todo
     <input data-bind='value: Title, valueUpdate: "afterkeydown"' />
     <span data-bind='visible: Title.hasError, text: Title.validationMessage'> </span>
 </p>
 
-    <p><input data-bind='value: DueDate' /></p>
+    <p>Due Date: <input data-bind='value: DueDate' /></p>
    
+    </div>
      <script type="text/javascript">
         
          //Note this must link to resouce from api to pull definition to populate model, and then to pull down info from api 
@@ -41,7 +42,11 @@
                  var strData = "";
                  for (i in dataModelResource) {
                      if (i > 0) { strData += "," }
-                     strData += dataModelResource[i]["Property"] + ": ko.observable('').extend({ required: 'Please enter a todo' }) "
+                     strData += dataModelResource[i]["Property"] + ": ko.observable('')";
+                     for (j in dataModelResource[i]["Validations"]) {
+                         strData += ".extend({ required: '" + dataModelResource[i]["Validations"][j]["Message"] + "' })";
+                     }
+                     strData += " "
                  }
                  strData = "var data = { " + strData + "}";
                  return strData;

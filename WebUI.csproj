@@ -281,7 +281,7 @@
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
-    <Content Include="Scripts\knockout_methods.js" />
+    <Content Include="Scripts\custom-knockout-methods.js" />
     <Content Include="TodoList.aspx" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />

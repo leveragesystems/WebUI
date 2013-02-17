@@ -4,9 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <script src="Scripts/jquery-1.9.1.js"></script>
-<script src="Scripts/knockout-2.2.1.js"></script>
-<script src="Scripts/knockout.mapping-latest.js"></script>
+    <script src="Scripts/knockout-2.2.1.js"></script>
+    <script src="Scripts/knockout.mapping-latest.js"></script>
+    <script src="Scripts/custom-knockout-methods.js"></script>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <script src="Scripts/bootstrap.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
